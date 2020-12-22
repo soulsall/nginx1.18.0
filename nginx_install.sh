@@ -22,7 +22,7 @@ function install_nginx()
         cd $nginx_install_dir/openssl-1.0.2n && ./config && make && make install
    fi
    #install nginx
-   groupadd nginx &&  useradd -g apache -s /sbin/nologin apache
+   groupadd apache &&  useradd -g apache -s /sbin/nologin apache
    version="1.18.0"
    nginx_package="nginx-$version.tar.gz"
    nginx_download_url="https://nginx.org/download/$nginx_package"
