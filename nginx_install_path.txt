@@ -1,2 +1,2 @@
 ####更改以下目录路径可指定nginx安装路径,若不指定默认nginx安装路径为/data/software,程序文件目录为nginx
-/opt/software
+/data/software
