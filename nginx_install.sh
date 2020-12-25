@@ -30,11 +30,17 @@ function install_nginx()
        echo "beginnging download package of $nginx_package"
        wget $nginx_download_url
    fi
+   if [ ! -f "headers-more-nginx-module-0.33.zip" ];then
+       echo "beginnging download package of headers-more-nginx-module-0.33.zip"
+       wget https://codeload.github.com/openresty/headers-more-nginx-module/zip/v0.33 -O headers-more-nginx-module-0.33.zip
+   fi
+   unzip headers-more-nginx-module-0.33.zip -d $nginx_install_dir
+   
    if [ ! -d "$nginx_install_dir/nginx" ];then
         if [ ! -d "$installdir/nginx-$version" ];then
            tar -zxvf $nginx_package -C $installdir
         fi
-        cd $installdir/nginx-$version && ./configure --prefix=$nginx_install_dir/nginx --with-cc-opt=-O2 --user=apache --group=apache --with-http_v2_module --with-http_sub_module --with-http_ssl_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_v2_module --with-http_mp4_module --with-http_dav_module --with-http_flv_module --with-http_realip_module --with-http_stub_status_module --with-openssl=$nginx_install_dir/openssl-1.0.2n && make && make install
+        cd $installdir/nginx-$version && ./configure --prefix=$nginx_install_dir/nginx --with-cc-opt=-O2 --user=apache --group=apache --with-http_v2_module --with-http_sub_module --with-http_ssl_module --with-http_image_filter_module --with-http_gzip_static_module --with-http_v2_module --with-http_mp4_module --with-http_dav_module --with-http_flv_module --with-http_realip_module --with-http_stub_status_module --with-openssl=$nginx_install_dir/openssl-1.0.2n --add-module=$nginx_install_dir/headers-more-nginx-module-0.33 && make && make install
         ln -snf $nginx_install_dir/nginx/sbin/nginx /usr/sbin/
         mkdir $nginx_install_dir/nginx/conf/vhost
         yes |cp -i $installdir/nginx.conf $nginx_install_dir/nginx/conf/
